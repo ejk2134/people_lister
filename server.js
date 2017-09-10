@@ -26,5 +26,7 @@ app.get('/person', function(req, res){
 
 app.post('/person', function(req, res){
     people.push(req.body);
+    res.send('Data received');
     console.log('Received from client: ', req.body);
+    console.log(people);
 })
