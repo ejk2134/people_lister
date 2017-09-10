@@ -20,7 +20,7 @@ app.get('/', function(req, res){
 })
 
 app.get('/person', function(req, res){
-    res.send({peopleArray:people});
+    res.send({peopleArray: people});
     console.log('people array sent to client');
 })
 
@@ -28,5 +28,4 @@ app.post('/person', function(req, res){
     people.push(req.body);
     res.send('Data received');
     console.log('Received from client: ', req.body);
-    console.log(people);
 })

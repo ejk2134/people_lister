@@ -27,6 +27,22 @@ function onSubmit(){
         success: function(res){
             $('#inputName').val('');
             $('#inputFact').val('');
+            getPerson();
+        }
+    })
+}
+
+function getPerson(){
+    $.ajax({
+        method: 'GET',
+        url: '/person',
+        success: function(res){
+            console.log(res);
+            $('ul').children().remove();
+            for (var i = 0; i <res.peopleArray.length; i++){
+               var $personItem = $('<li>').text(res.peopleArray[i].name + ": " + res.peopleArray[i].fact);
+               $('ul').append($personItem);
+            }
         }
     })
 }
