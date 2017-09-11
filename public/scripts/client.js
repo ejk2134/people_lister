@@ -2,6 +2,10 @@ console.log('js sourced');
 
 $(document).ready(onReady);
 
+// global variables for navigating person carousel
+var peopleList = [];
+var displayIndex = 0;
+
 function onReady(){
     //GET index
     $.ajax({
@@ -13,7 +17,9 @@ function onReady(){
     })
 
     //listeners
-    $('#submitPerson').on('click', onSubmit);    
+    $('#submitPerson').on('click', onSubmit);
+    $('#previous').on('click', previousPerson);
+    $('#next').on('click', nextPerson);
 }
 
 function onSubmit(){
@@ -40,12 +46,26 @@ function getPerson(){
         url: '/person',
         success: function(res){
             console.log(res);
-            $('ul').children().remove();
-            for (var i = 0; i <res.peopleArray.length; i++){
-                //create list item for added person and append it to DOM
-                var $personItem = $('<li>').text(res.peopleArray[i].name + ": " + res.peopleArray[i].fact);
-                $('ul').append($personItem);
-            }
+            peopleList = res.peopleArray;
+            displayIndex = 0;
+            nextPerson();
+            $('div').show();
         }
     })
+}
+
+function nextPerson(){
+    displayIndex++;
+    displayIndex = displayIndex % peopleList.length;
+    var person = peopleList[displayIndex];
+    $('#displayed').text(person.name + ': ' + person.fact);
+    $('#displayNumber').text((displayIndex + 1) + '/' + peopleList.length);
+}
+
+function previousPerson(){
+    displayIndex += peopleList.length - 1;
+    displayIndex = displayIndex % peopleList.length;
+    var person = peopleList[displayIndex];
+    $('#displayed').text(person.name + ': ' + person.fact);
+    $('#displayNumber').text((displayIndex + 1) + '/' + peopleList.length);
 }
