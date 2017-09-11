@@ -21,10 +21,12 @@ function onSubmit(){
         method: 'POST',
         url: '/person',
         data: {
+            // send values in input fields to server
             name: $('#inputName').val(),
             fact: $('#inputFact').val()
         },
         success: function(res){
+            // clear input fields and run function for /person 'GET' route
             $('#inputName').val('');
             $('#inputFact').val('');
             getPerson();
@@ -40,8 +42,9 @@ function getPerson(){
             console.log(res);
             $('ul').children().remove();
             for (var i = 0; i <res.peopleArray.length; i++){
-               var $personItem = $('<li>').text(res.peopleArray[i].name + ": " + res.peopleArray[i].fact);
-               $('ul').append($personItem);
+                //create list item for added person and append it to DOM
+                var $personItem = $('<li>').text(res.peopleArray[i].name + ": " + res.peopleArray[i].fact);
+                $('ul').append($personItem);
             }
         }
     })

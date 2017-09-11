@@ -20,11 +20,13 @@ app.get('/', function(req, res){
 })
 
 app.get('/person', function(req, res){
+    // Send people array to client wrapped in an object
     res.send({peopleArray: people});
     console.log('people array sent to client');
 })
 
 app.post('/person', function(req, res){
+    // add received person to people array
     people.push(req.body);
     res.send('Data received');
     console.log('Received from client: ', req.body);
